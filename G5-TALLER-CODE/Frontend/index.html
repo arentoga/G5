@@ -8,5 +8,20 @@
     <script src="main.js"></script>
     <title>Taller - G5</title>
   </head>
-  <body></body>
+  <body>
+    <h2>Taller G5</h2>
+    <p>Seleccione el método de clusterización a usar:</p>
+
+    <form>
+      <label for="method">Opciones: </label>
+      <select name="method" id="method">
+        <option value="kmeans">Kmeans</option>
+        <option value="spectral">Spectral</option>
+        <option value="dbscan">Dbscan</option>
+        <option value="jerarquico">Jerarquico</option>
+        <option value="aglomerativo">Aglomerativo</option>
+      </select>
+      <button onclick="getInfo(event)">Solicitar Información</button>
+    </form>
+  </body>
 </html>
