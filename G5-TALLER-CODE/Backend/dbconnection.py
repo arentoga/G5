@@ -1,8 +1,17 @@
+# Python Libraries
 import psycopg2
+
+from settings import (
+    DB_NAME,
+    DB_HOST,
+    DB_PORT,
+    DB_USER,
+    DB_PASSWORD,
+)
 
 class Database:
 
-    def __init__(self, dbname=None, host=None, port="5432", user=None, passwd=None):
+    def __init__(self, dbname=DB_NAME, host=DB_HOST, port=DB_PORT, user=DB_USER, passwd=DB_PASSWORD):
         self.dbname = dbname
         self.host = host
         self.port = port
@@ -12,13 +21,6 @@ class Database:
                                    user=self.user, password=self.passwd)
         self.cur =  self.conn.cursor()
         
-    def query(self, statement, commit=False):
-        self.cur.execute(statement)
-        if(commit): 
-            self.conn.commit()
-
-        return self.cur.fetchall()
-
     def close(self):
         self.cur.close()
         self.conn.close()
