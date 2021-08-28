@@ -1,5 +1,6 @@
 import os, psycopg2, json, io, base64
-from flask import Flask, request, request, jsonify
+from flask.wrappers import Response
+from flask import Flask, request, request, jsonify,render_template
 #from flask_sqlalchemy import SQLAlchemy
 from dboperation import *
 # maching learning
@@ -14,18 +15,31 @@ from sklearn import metrics
 from sklearn.datasets import make_blobs
 import scipy.cluster.hierarchy as shc
 from sklearn.cluster import AgglomerativeClustering
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt, mpld3
+from flask_cors import CORS, cross_origin
+from json import dumps
+
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 @app.route("/")
+
+
+
 def init():
     data = selectCategoriasTitulos()
     json_result = json.dumps(data)
-    return json_result
+    return jsonify(json_result)
+    #response = {'content':'Hello World'}
+    #return jsonify(response)
+
 
 @app.route("/clustering", methods = ['GET', 'POST', 'DELETE'])
 def clustering ():
     if request.method == 'POST':
+        
 
         body = request.get_json()
         n_clusters      = body["n_clusters"]
@@ -166,15 +180,32 @@ def clustering ():
 
         return  json_result
 
+        
 @app.route("/kmeans", methods = ['GET', 'POST', 'DELETE'])
+#@cross_origin()
 def kmeans():
     if request.method == 'POST':
-
+        body2 = {
+            "columns": [
+                "titulo_cat",
+                "full_descripcion"
+            ],
+            "n_clusters": 5,
+            "init": "k-means++",
+            "max_iter": 500,
+            "n_init": 10,
+            "spectral-assign_labels": "discretize",
+            "dbscan-eps": 0.3,
+            "dbscan-min_samples": 10,
+            "jerarq-method": "ward",
+            "aglo-affinity": "euclidean",
+            "aglo-linkage": "ward"
+        }
         body = request.get_json()
-        n_clusters  = body["n_clusters"]
-        init        = body['init']
-        max_iter    = body['max_iter']
-        n_init      = body['n_init']
+        n_clusters  = body2["n_clusters"]
+        init        = body2['init']
+        max_iter    = body2['max_iter']
+        n_init      = body2['n_init']
 
         total_data = selectCategoriasTitulos()
 
@@ -184,14 +215,13 @@ def kmeans():
         sc_x = StandardScaler()
         # Se establece una transformacion
         X = sc_x.fit_transform(X)          
-
+        
         #/*------------------------Grafico El Metodo del Codo------------------------------------*/
         wcss=[]
         for i in range(1,11): 
             kmeans = KMeans(n_clusters=i, init =init, max_iter=max_iter,n_init=n_init,random_state=0 )
             kmeans.fit(X)            
-            wcss.append(kmeans.inertia_)
-
+            wcss.append(kmeans.inertia_)       
         plt.plot(range(1,11),wcss)
         plt.title('Grafico El Metodo del Codo')
         plt.xlabel('Numero de clusters')
@@ -228,8 +258,9 @@ def kmeans():
         #json_result = json.dumps({"prediction": y_kmeans.tolist()})
         #json_result = json.dumps({"prediction": dataset.values.tolist()})
         json_result = jsonify(dataset.values.tolist())
-
+        #json_result.headers.add("Access-Control-Allow-Origin", "*")
         return  json_result
+
 
 @app.route("/spectral", methods = ['GET', 'POST', 'DELETE'])
 def spectral():
@@ -267,7 +298,10 @@ def spectral():
 
         json_result = jsonify(dataset.values.tolist())
 
-        return  json_result
+        #return  json_result
+
+        json_result = json.dumps(total_data)
+        return jsonify(json_result)
 
 @app.route("/dbscan", methods = ['GET', 'POST', 'DELETE'])
 def dbscan():
@@ -388,4 +422,4 @@ def aglomerativo():
         return  json_result   
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

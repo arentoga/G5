@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <title>DBScan</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-host-cloud.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+
+    <style>
+    
+      
+      div.ex3 {
+        width: 220px;
+        height: 220px;
+        overflow: auto;
+      }
+      </style>
+
+<!--
+
+Host Cloud Template
+
+https://templatemo.com/tm-541-host-cloud
+
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="index.html"><h2>Cluster <em>web</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Inicio
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="about.html">Documentacion</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">Teoría</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">Contactanos</a>
+              </li>
+            </ul>
+          </div>
+          <div class="functional-buttons">
+            <ul>
+              <li><a href="#">Log in</a></li>
+              <li><a href="#">Sign Up</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page Content -->
+    <!-- Heading Starts Here -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>DBScan</h1>
+            <p><a href="index.html">Inicio</a> / <span>DBScan</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Heading Ends Here -->
+
+
+    <!-- About Us Starts Here -->
+    <div class="about-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="left-image">
+              <img src="assets/images/kmeans.jpg" alt="">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="right-content">
+              <div class="section-heading">
+                <span>Resultados</span>
+                <h2>Clusters :</h2>
+                <p>Se obtuvieron las siguientes agrupaciones para Categoria y Titulos</p>
+              </div>  
+              <table id="Table"></table>
+              
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+              <title>Obteniendo Json</title>
+              <body>
+              <div id="datosPersona">
+              
+              <table id="Table"></table>
+              </div>
+              <div>
+                <div class="container my-5 text-center">
+                    <button class="btn btn-danger w-100" onclick="traer()">Mostrar Lista</button>
+                    <div class="mt-5">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Titulo</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Cluster</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contenido">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <script>
+                  var json = [["ARCHITECT","ARQUITECTO ANDROID",-1],["ARCHITECT","ARQUITECTO BACKEND",-1],["ARCHITECT","ARQUITECTO DE SOFTWARE",-1],["ARCHITECT","CLOUD ARCHITECT",-1],["ARCHITECT","ENTERPRISE ARCHITECTURE",-1],["ARCHITECT","MICROSERVICES ARCHITECT",-1],["ARTIFICIAL INTELLIGENCE","ESPECIALISTA IA",-1],["BUSINESS INTELLIGENCE","ANALISTA BI",-1],["BUSINESS INTELLIGENCE","ESPECIALISTA BI",-1],["CLOUD COMPUTING","ANALISTA CLOUD",-1],["CLOUD COMPUTING","CLOUD ENGINEER",-1],["COMMUNICATION & NETWORKING","ADMINISTRADOR REDES Y COMUNICACIONES",-1],["COMMUNICATION & NETWORKING","ANALISTA REDES Y COMUNICACIONES",-1],["COMMUNICATION & NETWORKING","ESPECIALISTA REDES Y COMUNICACIONES",-1],["COMPUTER SCIENCE, SYSTEMS AND SOFTWARE","COMPUTER SCIENCE",-1],["COMPUTER SCIENCE, SYSTEMS AND SOFTWARE","PRACTICANTE TI",-1],["COMPUTER SCIENCE, SYSTEMS AND SOFTWARE","SOFTWARE ENGINEER",-1],["COMPUTER SCIENCE, SYSTEMS AND SOFTWARE","SYSTEM ENGINEER",-1],["CYBERSECURITY","ANALISTA DE RIESGOS",-1],["CYBERSECURITY","ANALISTA FORENSE INFORMATICO",-1],["CYBERSECURITY","ANALISTA SEGURIDAD INFORMATICA",-1],["CYBERSECURITY","AUDITOR DE SISTEMAS",-1],["CYBERSECURITY","ESPECIALISTA CIBERSEGURIDAD",-1],["CYBERSECURITY","SECURITY ENGINEER",-1],["DATABASE","ADMINISTRADOR BASE DE DATOS",-1],["DATABASE","ANALISTA BASE DE DATOS",-1],["DATABASE","ANALISTA BIGDATA",-1],["DATABASE","ANALISTA DATAWAREHOUSE",-1],["DATABASE","BIGDATA ENGINEER",0],["DATABASE","CLOUD DATA ENGINEER",0],["DATABASE","COORDINADOR BASE DE DATOS",0],["DATABASE","DATA ARCHITECT",0],["DATABASE","DATA ENGINEER",0],["DATABASE","DATA SCIENTIST",0],["DATABASE","DATAMINING EXPERT",0],["DATABASE","SUPERVISOR BASE DE DATOS SIG",-1],["DEVELOPER",".NET DEVELOPER",-1],["DEVELOPER","ANALISTA PROGRAMADOR",0],["DEVELOPER","ANALISTA PROGRAMADOR BI",0],["DEVELOPER","ANALISTA PROGRAMADOR POWER BUILDER",0],["DEVELOPER","ANALISTA PROGRAMADOR WEB",0],["DEVELOPER","ANDROID DEVELOPER",0],["DEVELOPER","ANGULAR DEVELOPER",0],["DEVELOPER","BACKEND AWS DEVELOPER",0],["DEVELOPER","BACKEND DEVELOPER",0],["DEVELOPER","BACKEND JAVA DEVELOPER",0],["DEVELOPER","BACKEND MOBILE DEVELOPER",0],["DEVELOPER","BACKEND NODE.JS",0],["DEVELOPER","BACKEND PHP",0],["DEVELOPER","BACKEND PYTHON",0],["DEVELOPER","BI DEVELOPER",0],["DEVELOPER","BIGDATA DEVELOPER",0],["DEVELOPER","BLOCKCHAIN DEVELOPER",0],["DEVELOPER","BUSINESS DEVELOPER",0],["DEVELOPER","C/C++ DEVELOPER",0],["DEVELOPER","CHATBOT DEVELOPER",0],["DEVELOPER","CLOUD DEVELOPER",0],["DEVELOPER","CMS DEVELOPER",0],["DEVELOPER","COBOL DEVELOPER",0],["DEVELOPER","DATA ENGINEER & DEVELOPER",0],["DEVELOPER","DEVELOPER",0],["DEVELOPER","DEVOPS DEVELOPER",0],["DEVELOPER","EMBEDDED DEVELOPER",0],["DEVELOPER","FLUTTER DEVELOPER",1],["DEVELOPER","FRONTEND ANDROID",1],["DEVELOPER","FRONTEND DEVELOPER",1],["DEVELOPER","FULLSTACK DEVELOPER",1],["DEVELOPER","GAMES DEVELOPER",1],["DEVELOPER","GENEXUS DEVELOPER",1],["DEVELOPER","IOS DEVELOPER",1],["DEVELOPER","IOT DEVELOPER",1],["DEVELOPER","JAVA DEVELOPER",1],["DEVELOPER","JAVASCRIPT DEVELOPER",1],["DEVELOPER","MACHINE LEARNING DEVELOPER",1],["DEVELOPER","MICROSERVICES DEVELOPER",1],["DEVELOPER","MOBILE DEVELOPER",1],["DEVELOPER","NODE.JS DEVELOPER",1],["DEVELOPER","PERL DEVELOPER",1],["DEVELOPER","PHP DEVELOPER",1],["DEVELOPER","PYTHON DEVELOPER",1],["DEVELOPER","QA DEVELOPER",1],["DEVELOPER","REACT DEVELOPER",1],["DEVELOPER","RPA DEVELOPER",1],["DEVELOPER","RUBY DEVELOPER",1],["DEVELOPER","SCALA DEVELOPER",1],["DEVELOPER","SQL DEVELOPER",1],["DEVELOPER","WEB DEVELOPER",-1],["DEVELOPER","WEB SERVICES DEVELOPER",-1],["DEVELOPER","WEBSCRAPING DEVELOPER",-1],["DIGITAL BUSINESS PROCESS","ANALISTA BPM",-1],["DIGITAL BUSINESS PROCESS","ANALISTA CRM",-1],["DIGITAL BUSINESS PROCESS","ANALISTA DE PROCESOS",-1],["DIGITAL BUSINESS PROCESS","ANALISTA FUNCIONAL",-1],["DIGITAL BUSINESS PROCESS","ESPECIALISTA ECM",1],["DIGITAL BUSINESS PROCESS","ESPECIALISTA ECOMMERCE",1],["DIGITAL BUSINESS PROCESS","ESPECIALISTA ERP",1],["DIGITAL BUSINESS PROCESS","ESPECIALISTA LCMS",1],["DIGITAL BUSINESS PROCESS","ESPECIALISTA TRANSFORMACI\u00d3N DIGITAL",1],["INFORMATION AND KNOWLEDGE MANAGEMENT","ANALISTA GESTION DE INFORMACION",-1],["INFORMATION AND KNOWLEDGE MANAGEMENT","ESPECIALISTA GESTION DE INFORMACION",1],["IT SERVICES","ANALISTA DE INTEGRACION",-1],["IT SERVICES","ANALISTA DE SERVICIOS TI",-1],["IT SERVICES","SALES TI ENGINEER",-1],["MANAGER","BI MANAGER",-1],["MANAGER","CMS MANAGER",-1],["MANAGER","COMMUNITY MANAGER",-1],["MANAGER","DEVELOPER MANAGER",-1],["MANAGER","DEVOPS ENGINEER",-1],["MANAGER","DIRECTOR CLOUD PLATFORM",-1],["MANAGER","GERENTE DE TI",-1],["MANAGER","GESTOR DE PROYECTOS",-1],["MANAGER","JEFE AUTOMATIZACION RPA",-1],["MANAGER","JEFE DE SERVICIOS TI",-1],["MANAGER","JEFE INFRAESTRUCTURA TI",-1],["MANAGER","JEFE SOPORTE TECNICO",-1],["MANAGER","PROCESS MANAGER",-1],["MANAGER","PRODUCT MANAGER",-1],["MANAGER","QA MANAGER",-1],["QUALITY SOFTWARE","ANALISTA QA",-1],["SERVERS-CONTAINERS-VIRTUALIZATION","ANALISTA INFRAESTRUCTURA TI",-1],["SERVERS-CONTAINERS-VIRTUALIZATION","SYSTEMS ADMINISTRATOR",-1],["SERVICE DESK","ANALISTA SERVICE DESK",-1],["SERVICE DESK","COORDINADOR SERVICE DESK",-1],["SERVICE DESK","GESTOR SERVICE DESK",-1],["SERVICE DESK","SOPORTE TECNICO",-1],["SOFTWARE DESIGN","SOFTWARE DESIGN",-1],["SYSTEM ANALYSIS","ANALISTA DE SISTEMAS",-1],["SYSTEM ANALYSIS","ANALISTA TI",-1],["SYSTEM ANALYSIS","ESPECIALISTA TI",-1],["TRAINING AND RESEARCH","ANALISTA DE CAPACITACION",-1],["TRAINING AND RESEARCH","COORDINADOR ACADEMICO",-1],["TRAINING AND RESEARCH","RESEARCH EXPERT",-1],["TRAINING AND RESEARCH","SEARCH ENGINE EXPERT",-1]];
+                  var contenido = document.querySelector('#contenido')
+          
+                  function traer() {
+                    var datos = JSON.parse(JSON.stringify(json)); 
+                    //fetch('tabla.json')
+                      //    .then(res => res.json())
+                      //    .then(datos => {
+                              // console.log(datos)
+                              tabla(datos)
+                      //    })
+                  }
+          
+                  function tabla(datos) {
+                      // console.log(datos)
+                      
+                      contenido.innerHTML = ''
+                      for(let valor of datos){
+                          // console.log(valor.nombre)
+                          contenido.innerHTML += `
+                          
+                          <tr>
+                              <td>${ valor[0] }</td>
+                              <td>${ valor[1] }</td>
+                              <td>${ valor[2] }</td>
+                          </tr>
+                          
+                          `
+                      }
+                  }
+                </script> 
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- About Us Ends Here -->
+
+
+    <!-- Testimonials Starts Here 
+    <<div class="testimonials-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+              <span>Testimonials</span>
+              <h2>What they say about us</h2>
+            </div>
+          </div>
+          <div class="col-md-10 offset-md-1">
+            <div class="owl-testimonials owl-carousel">
+              <div class="testimonial-item">
+                <div class="icon">
+                  <i class="fa fa-quote-right"></i>
+                </div>
+                <p>"Ut elementum a elit sed tristique. Pellentesque sed semper erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean quam erat, rutrum ut malesuada."</p>
+                <h4>William Smith</h4>
+                <span>New Co-Founder</span>
+              </div>
+              <div class="testimonial-item">
+                <div class="icon">
+                  <i class="fa fa-quote-right"></i>
+                </div>
+                <p>"Quisque lacinia sed velit et maximus. Quisque dictum, lacus a malesuada finibus, arcu magna luctus risus, eu accumsan risus elit vitae lacus."</p>
+                <h4>Vinny Smart</h4>
+                <span>Digital Marketer</span>
+              </div>
+              <div class="testimonial-item">
+                <div class="icon">
+                  <i class="fa fa-quote-right"></i>
+                </div>
+                <p>"Vestibulum mauris ipsum, tempor tincidunt justo sit amet, bibendum tincidunt dui. Aenean molestie, odio quis viverra ultricies, leo tellus lacinia neque, sit amet maximus tortor nunc aliquet felis."</p>
+                <h4>Trevor Liam</h4>
+                <span>Technology Chef</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    Testimonials Ends Here -->
+
+
+    <!-- Footer Starts Here -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="footer-item">
+              <div class="footer-heading">
+                <h2>About Us</h2>
+              </div>
+              <p>Proyecto Desarrollado por el Team G5, para el curso de Taller de Construcción de Sistemas en la FISI - UNMSM</p>
+            </div>
+          </div>
+          
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="footer-item">
+              <div class="footer-heading">
+                <h2>Integrantes</h2>
+              </div>
+              <ul class="footer-list">
+                <li><a href="#">Arturo Torres Garcia</a></li>
+                <li><a href="#">Jorge Velasquez Roman</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="footer-item">
+              <div class="footer-heading">
+                <h2>Useful Links</h2>
+              </div>
+              <ul class="footer-list">
+                <li><a href="https://trello.com/b/lzRI5Iy8/g5">Trello</a></li>
+                <li><a href="https://github.com/arentoga/G5">GitHub</a></li>
+                <li><a href="https://github.com/inwe-research-group/delati-pml-back">Backend</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="footer-item">
+              <div class="footer-heading">
+                <h2>More Information</h2>
+              </div>
+              <ul class="footer-list">
+                <li>Email: <a href="#">arturo.torres3@unmsm.edu.pe</a></li>
+                <li>Email: <a href="#">support@company.com</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="sub-footer">
+              <p>Copyright &copy; 2021 FISI UNMSM
+				- Designed by TEAM G5</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer Ends Here -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/accordions.js"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>
