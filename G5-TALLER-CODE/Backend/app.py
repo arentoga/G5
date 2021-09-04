@@ -421,5 +421,13 @@ def aglomerativo():
 
         return  json_result   
 
+@app.route("/jerarquico_g5", methods = ['GET', 'POST', 'DELETE'])
+def jerarquical():
+    if request.method == 'POST':
+        data = selectCategoriasTitulos()
+        json_result  = {}
+        return  json_result  
+
+
 if __name__ == '__main__':
     app.run(debug=True)

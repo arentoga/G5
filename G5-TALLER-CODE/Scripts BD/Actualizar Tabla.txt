@@ -1,0 +1,6 @@
+
+update oferta_detalle
+set ofertaperfil_id=18,
+f_equipo='2021-12-06',
+equipo='TEAM G5'
+where id_ofertadetalle in ('INSERTAMOS LOS ID DE LAS TUPLAS CLASIFICADAS')

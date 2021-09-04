@@ -24,13 +24,21 @@ DB_PASSWORD = "modulo4"
 commit=False
 
 
-
 conn = psycopg2.connect(dbname=DB_NAME, host=DB_HOST, port=DB_PORT,
                                    user=DB_USER, password=DB_PASSWORD)
 cur =  conn.cursor()
 
-statement = """select distinct o.htitulo_cat, o.htitulo from webscraping w inner join oferta o on (w.id_webscraping=o.id_webscraping) 
-where o.id_estado is null order by 1,2;"""
+statement = """select o.htitulo_cat,o.htitulo,w.pagina_web,o.empresa,o.lugar,o.salario,date_part('year',o.fecha_publicacion) as periodo,
+f_dimPuestoEmpleo(o.id_oferta,7) as funciones,
+f_dimPuestoEmpleo(o.id_oferta,1) as conocimiento,
+f_dimPuestoEmpleo(o.id_oferta,3) as habilidades,
+f_dimPuestoEmpleo(o.id_oferta,2) as competencias,
+f_dimPuestoEmpleo(o.id_oferta,17) as certificaciones,
+f_dimPuestoEmpleo(o.id_oferta,5) as beneficio,
+f_dimPuestoEmpleo(o.id_oferta,11) as formacion
+from webscraping w inner join oferta o
+on (w.id_webscraping=o.id_webscraping)
+where o.id_estado is null;"""
 
 
 cur.execute(statement)
@@ -47,20 +55,22 @@ conn.close()
 
 print(base)
 
-ler = pp.LabelEncoder()
-ler.fit(base[0])
-list(ler.classes_)
-nueva_base=ler.transform(base[0])
-nueva_base
+cabeceras = ['Categoría','Titulo','Pagina Web',
+'Empresa','Lugar','Salario','Periodo','Funciones',
+'Conocimiento','Habilidades','Competencias','Certificaciones',
+'Beneficio','Formacion']
 
-ler = pp.LabelEncoder()
-ler.fit(base[1])
-list(ler.classes_)
-nueva_base_2=ler.transform(base[1])
 base_final = pd.DataFrame()
-base_final['Titulo'] = nueva_base
-base_final['Titulo_O'] = nueva_base_2
-base_final
+
+for i in range (len(cabeceras)):
+    ler = pp.LabelEncoder()
+    ler.fit(base[i])
+    list(ler.classes_)
+    nueva_base=ler.transform(base[i])
+    base_final[cabeceras[i]] = nueva_base
+
+print(base_final)
+
 
 clustering_jerarquico = linkage(base_final,'ward')
 
@@ -75,13 +85,13 @@ plt.title("Dendrograms")
 
 dendrogram = sch.dendrogram(clustering_jerarquico)
 
-plt.axhline(y=200, color='r', linestyle='--')
+plt.axhline(y=2000, color='r', linestyle='--')
 
 plt.show()
 
 
 
-clusters = fcluster(clustering_jerarquico,t=200,criterion='distance')
+clusters = fcluster(clustering_jerarquico,t=2000,criterion='distance')
 
 base['Clustering Jerarquico'] = clusters
 base
@@ -99,7 +109,7 @@ porcentaje.astype(str) + '%'
 
 plt.figure(figsize=(10, 7))  
 
-plt.scatter(base_final['Titulo'],base_final['Titulo_O'], c=clusters)
+plt.scatter(base_final[cabeceras[0]],base_final[cabeceras[1]], c=clusters)
 
 plt.show()
 

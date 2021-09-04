@@ -11,7 +11,12 @@ from googletrans import Translator
 from mtranslate import translate
 import unidecode
 import re
+from googletrans import Translator
 
+def traducir(a):
+    translator = Translator()
+    result = translator.translate(a, src='en', dest='es')
+    return result
 
 
 

@@ -38,15 +38,9 @@ const options = {
 };
 
 
-
-
-
-
-
-
-
 const options2 = {
     method: 'GET',
+  
 
 };
 const url2 = 'https://delati-pml-back.herokuapp.com/kmeans';
@@ -57,7 +51,7 @@ const url4 = '/'
 
 
 //fetch(url,options2)
-fetch(url,options)
+fetch(url3,options2)
 .then(response => response.json())
 .then(json => console.log(json))
 .catch(err => console.log(err))
